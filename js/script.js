@@ -34,7 +34,7 @@ resetButton.click(function () {
     `);
     $("#circulation").val('');
     printType.val("default").change();
-    complects.val('');
+    complects.val(1);
     $('.complect-price').css('display', 'none');
     $('.total-price .value').text(0);
     $('.unit-price .value').text(0);
@@ -415,4 +415,29 @@ function designerPaper(first, second, third, fourth, fifth) {
         if (circulation >= 15 && circulation <= 24) pricePerSheet = fourth + 28.63;
         if (circulation >= 25) pricePerSheet = fifth + 27.04;
     }
+}
+
+function validate() {
+    let tirazh = parseInt($('#circulation').val());
+    let komp = parseInt($('#complects').val());
+    let w = parseInt($('#width').val());
+    let h = parseInt($('#height').val());
+    let err = "";
+
+    if (tirazh < 1 || isNaN(tirazh)) err += "Тираж має бути ≥ 1.\n";
+    if (komp < 1 || isNaN(komp)) err += "Кількість комплектів ≥ 1.\n";
+
+    if ((w && !h) || (!w && h)) err += "Заповніть обидва поля розміру.\n";
+
+    if (w && h) {
+        if (w < 40 || h < 40) err += "Мінімальний розмір: 40х40 мм.\n";
+        if (w > 297 || h > 420) err += "Максимальний розмір: 297х420 мм.\n";
+    }
+
+    if (err.length > 0) {
+        alert(err);
+        return false;
+    }
+
+    return true;
 }
