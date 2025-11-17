@@ -156,36 +156,36 @@ paper.click(function () {
 function calculate() {
     densityCount = parseFloat($('#density').val());
     circulation = parseFloat($('#circulation').val());
-    let elemArea = 0;
-    let count = 0;
-    let cutPrice = 0;
+    let cutTotal = 0;
+    let cutPricePerSheet = 0;
+    let sheets = circulation;
     if (format.val() === "own") {
-        elemArea = parseFloat(width.val()) * parseFloat(height.val());
-        count = Math.floor((297*420)/elemArea);
-        if (circulation >= 1 && circulation <= 3) {
-            if (count <= 8) cutPrice = 12;
-            else if (count > 8) cutPrice = 26;
+        const w = parseFloat(width.val());
+        const h = parseFloat(height.val());
+
+        const perRow = Math.floor(297 / w);
+        const perCol = Math.floor(420 / h);
+        const perSheet = Math.max(1, perRow * perCol);
+
+        let sheets = Math.ceil(circulation / perSheet);
+
+        if(perSheet <= 8) {
+            if(sheets <= 3) cutPricePerSheet = 12;
+            else if(sheets <= 10) cutPricePerSheet = 10;
+            else if(sheets <= 25) cutPricePerSheet = 8;
+            else if(sheets <= 50) cutPricePerSheet = 6;
+            else if(sheets <= 100) cutPricePerSheet = 4;
+            else cutPricePerSheet = 3;
+        } else {
+            if(sheets <= 3) cutPricePerSheet = 26;
+            else if(sheets <= 10) cutPricePerSheet = 24;
+            else if(sheets <= 25) cutPricePerSheet = 20;
+            else if(sheets <= 50) cutPricePerSheet = 15;
+            else if(sheets <= 100) cutPricePerSheet = 10;
+            else cutPricePerSheet = 8;
         }
-        if (circulation >= 4 && circulation <= 10) {
-            if (count <= 8) cutPrice = 10;
-            else if (count > 8) cutPrice = 24;
-        }
-        if (circulation >= 11 && circulation <= 25) {
-            if (count <= 8) cutPrice = 8;
-            else if (count > 8) cutPrice = 20;
-        }
-        if (circulation >= 26 && circulation <= 50) {
-            if (count <= 8) cutPrice = 6;
-            else if (count > 8) cutPrice = 15;
-        }
-        if (circulation >= 51 && circulation <= 100) {
-            if (count <= 8) cutPrice = 4;
-            else if (count > 8) cutPrice = 10;
-        }
-        if (circulation > 100) {
-            if (count <= 8) cutPrice = 3;
-            else if (count > 8) cutPrice = 8;
-        }
+
+        cutTotal = cutPricePerSheet * sheets;
     }
 
     switch (paper.val()) {
@@ -355,13 +355,16 @@ function calculate() {
                 }
                 break;
         }
-    pricePerSheet += cutPrice;
-    totalPrice = pricePerSheet * circulation * parseFloat(complects.val());
-    $('.total-price .value').text(totalPrice);
-    $('.unit-price .value').text(pricePerSheet);
+    if(format.val() === "own") {
+        totalPrice = (pricePerSheet * sheets + cutTotal) * parseFloat(complects.val());
+    } else {
+        totalPrice = pricePerSheet * circulation * parseFloat(complects.val());
+    }
+    $('.total-price .value').text(totalPrice.toFixed(2));
+    $('.unit-price .value').text((totalPrice / circulation).toFixed(2));
     if (parseFloat(complects.val()) > 1) {
         $('.complect-price').css('display', 'block');
-        $('.complect-price .value').text(totalPrice / parseFloat(complects.val()));
+        $('.complect-price .value').text((totalPrice / parseFloat(complects.val())).toFixed(2));
     }  else $('.complect-price').css('display', 'none');
 }
 
