@@ -158,6 +158,7 @@ function calculate() {
     circulation = parseFloat($('#circulation').val());
     let cutTotal = 0;
     let cutPricePerSheet = 0;
+    let realCirculations = circulation;
     let sheets = circulation;
     if (format.val() === "own") {
         const w = parseFloat(width.val());
@@ -186,6 +187,7 @@ function calculate() {
         }
 
         cutTotal = cutPricePerSheet * sheets;
+        circulation = sheets;
     }
 
     switch (paper.val()) {
@@ -355,6 +357,7 @@ function calculate() {
                 }
                 break;
         }
+    circulation = realCirculations;
     const printTotal = pricePerSheet * sheets;
     const oneSetTotal = printTotal + cutTotal;
     totalPrice = oneSetTotal * parseFloat(complects.val());
