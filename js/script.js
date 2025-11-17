@@ -14,6 +14,7 @@ let pricePerSheet = 0;
 let totalPrice = 0;
 
 countButton.click(function () {
+    if(!validate()) return;
     calculate();
 });
 
