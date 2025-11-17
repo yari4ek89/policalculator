@@ -356,7 +356,9 @@ function calculate() {
                 break;
         }
     if(format.val() === "own") {
-        totalPrice = (pricePerSheet * sheets + cutTotal) * parseFloat(complects.val());
+        const printTotal = pricePerSheet * sheets;
+        const cutTotal = cutPricePerSheet * sheets;
+        totalPrice = (printTotal + cutTotal) * parseFloat(complects.val());
     } else {
         totalPrice = pricePerSheet * circulation * parseFloat(complects.val());
     }
