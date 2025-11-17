@@ -156,10 +156,11 @@ paper.click(function () {
 function calculate() {
     densityCount = parseFloat($('#density').val());
     circulation = parseFloat($('#circulation').val());
+    const totalCirculation = circulation * parseFloat(complects.val());
+    circulation = totalCirculation;
     let cutTotal = 0;
     let cutPricePerSheet = 0;
-    let realCirculations = circulation;
-    let sheets = circulation;
+    let sheets = totalCirculation;
     if (format.val() === "own") {
         const w = parseFloat(width.val());
         const h = parseFloat(height.val());
@@ -168,7 +169,7 @@ function calculate() {
         const perCol = Math.floor(420 / h);
         const perSheet = Math.max(1, perRow * perCol);
 
-        sheets = Math.ceil(circulation / perSheet);
+        sheets = Math.ceil(totalCirculation / perSheet);
 
         if(perSheet <= 8) {
             if(sheets <= 3) cutPricePerSheet = 12;
@@ -192,7 +193,17 @@ function calculate() {
 
     switch (paper.val()) {
             case "Офсетний":
-                if (format.val() === "A4" || format.val() === "A5" || format.val() === "A6" || format.val() === "Вiзитка 50х90мм" || format.val() === "Євро вiзитка 55х85мм" || format.val() === "100x200мм" || format.val() === "100x100мм" || (parseFloat(width.val()) <= 210 && parseFloat(height.val()) <= 297) && (parseFloat(width.val()) >= 40 && parseFloat(height.val()) >= 40)) {
+                if (format.val() === "A4" ||
+                    format.val() === "A5" ||
+                    format.val() === "A6" ||
+                    format.val() === "Вiзитка 50х90мм" ||
+                    format.val() === "Євро вiзитка 55х85мм" ||
+                    format.val() === "100x200мм" ||
+                    format.val() === "100x100мм" ||
+                    (parseFloat(width.val()) <= 210 &&
+                        parseFloat(height.val()) <= 297) &&
+                    (parseFloat(width.val()) >= 40 &&
+                        parseFloat(height.val()) >= 40)) {
                     if (densityCount === 80) {
                         if (printType.val() === "Односторонній друк") {
                             if (circulation >= 1 && circulation <= 9) {
@@ -233,7 +244,11 @@ function calculate() {
                         }
                     }
                     A3Prices();
-                } else if (format === "A3" || (parseFloat(width.val()) <= 297 && parseFloat(height.val()) <= 420) && (parseFloat(width.val()) > 210 && parseFloat(height.val()) > 297)) {
+                } else if (format.val() === "A3" ||
+                    (parseFloat(width.val()) <= 297 &&
+                        parseFloat(height.val()) <= 420) &&
+                    (parseFloat(width.val()) > 210 &&
+                        parseFloat(height.val()) > 297)) {
                     if (densityCount === 80) {
                         if (printType.val() === "Односторонній друк") {
                             if (circulation >= 1 && circulation <= 4) {
@@ -357,16 +372,14 @@ function calculate() {
                 }
                 break;
         }
-    circulation = realCirculations;
     const printTotal = pricePerSheet * sheets;
-    const oneSetTotal = printTotal + cutTotal;
-    totalPrice = oneSetTotal * parseFloat(complects.val());
-    const unitPrice = oneSetTotal / circulation;
+    totalPrice = printTotal + cutTotal;
+    const unitPrice = totalPrice / totalCirculation;
     $('.total-price .value').text(totalPrice.toFixed(2));
     $('.unit-price .value').text(unitPrice.toFixed(2));
     if (parseFloat(complects.val()) > 1) {
         $('.complect-price').css('display', 'block');
-        $('.complect-price .value').text(oneSetTotal.toFixed(2));
+        $('.complect-price .value').text((totalPrice / parseFloat(complects.val())).toFixed(2));
     }  else $('.complect-price').css('display', 'none');
 }
 
