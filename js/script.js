@@ -167,7 +167,7 @@ function calculate() {
         const perCol = Math.floor(420 / h);
         const perSheet = Math.max(1, perRow * perCol);
 
-        let sheets = Math.ceil(circulation / perSheet);
+        sheets = Math.ceil(circulation / perSheet);
 
         if(perSheet <= 8) {
             if(sheets <= 3) cutPricePerSheet = 12;
@@ -355,18 +355,15 @@ function calculate() {
                 }
                 break;
         }
-    if(format.val() === "own") {
-        const printTotal = pricePerSheet * sheets;
-        const cutTotal = cutPricePerSheet * sheets;
-        totalPrice = (printTotal + cutTotal) * parseFloat(complects.val());
-    } else {
-        totalPrice = pricePerSheet * circulation * parseFloat(complects.val());
-    }
+    const printTotal = pricePerSheet * sheets;
+    const oneSetTotal = printTotal + cutTotal;
+    totalPrice = oneSetTotal * parseFloat(complects.val());
+    const unitPrice = oneSetTotal / circulation;
     $('.total-price .value').text(totalPrice.toFixed(2));
-    $('.unit-price .value').text((totalPrice / circulation).toFixed(2));
+    $('.unit-price .value').text(unitPrice.toFixed(2));
     if (parseFloat(complects.val()) > 1) {
         $('.complect-price').css('display', 'block');
-        $('.complect-price .value').text((totalPrice / parseFloat(complects.val())).toFixed(2));
+        $('.complect-price .value').text(oneSetTotal.toFixed(2));
     }  else $('.complect-price').css('display', 'none');
 }
 
