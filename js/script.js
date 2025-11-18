@@ -182,11 +182,21 @@ function calculate() {
             const perCol1 = Math.floor(420 / h);
             const perSheet1 = perRow1 * perCol1;
 
-            const perRow2 = Math.floor(297 / h);
-            const perCol2 = Math.floor(420 / w);
+            const perRow2 = Math.floor(420 / w);
+            const perCol2 = Math.floor(297 / h);
             const perSheet2 = perRow2 * perCol2;
+          
+            const q1 = Math.min(perCol1, perRow1);
+            const q2 = Math.min(perCol2, perCol2);
 
-            const perSheet = Math.max(1, perSheet1, perSheet2);
+            let perSheet;
+            if(q2 > q1) {
+              perSheet = perSheet2;
+            } else if (q1 > q2) {
+              perSheet = perSheet1;
+            } else {
+              perSheet = Math.max(perSheet1, perSheet2);
+            }
 
             sheets = Math.ceil(totalCirculation / perSheet);
 
@@ -207,7 +217,7 @@ function calculate() {
             }
 
             cutTotal = cutPricePerSheet * sheets;
-            circulation = sheets; 
+            //circulation = sheets; 
       }
     }
 
