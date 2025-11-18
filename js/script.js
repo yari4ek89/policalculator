@@ -217,7 +217,7 @@ function calculate() {
             }
 
             cutTotal = cutPricePerSheet * sheets;
-            //circulation = sheets; 
+            circulation = sheets; 
       }
     }
 
