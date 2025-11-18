@@ -18,6 +18,14 @@ countButton.click(function () {
     calculate();
 });
 
+format.change(function () {
+  if(format.val() === "own") return;
+  else {
+    width.val('');
+    height.val('');
+  }
+})
+
 resetButton.click(function () {
     pricePerSheet = 0;
     totalPrice = 0;
@@ -34,7 +42,7 @@ resetButton.click(function () {
                 <option value=300>300</option>
     `);
     $("#circulation").val('');
-    printType.val("default").change();
+    printType.val("Односторонній друк").change();
     complects.val(1);
     $('.complect-price').css('display', 'none');
     $('.total-price .value').text(0);
@@ -164,31 +172,43 @@ function calculate() {
     if (format.val() === "own") {
         const w = parseFloat(width.val());
         const h = parseFloat(height.val());
-
-        const perRow = Math.floor(297 / w);
-        const perCol = Math.floor(420 / h);
-        const perSheet = Math.max(1, perRow * perCol);
-
-        sheets = Math.ceil(totalCirculation / perSheet);
-
-        if(perSheet <= 8) {
-            if(sheets <= 3) cutPricePerSheet = 12;
-            else if(sheets <= 10) cutPricePerSheet = 10;
-            else if(sheets <= 25) cutPricePerSheet = 8;
-            else if(sheets <= 50) cutPricePerSheet = 6;
-            else if(sheets <= 100) cutPricePerSheet = 4;
-            else cutPricePerSheet = 3;
+      
+        if((w === 210 && h === 297) || (w === 297 && h === 210)) {
+            format.val("A4");
+        } else if((w === 297 && h === 420) || (w === 420 && h === 297)) {
+          format.val("A3");
         } else {
-            if(sheets <= 3) cutPricePerSheet = 26;
-            else if(sheets <= 10) cutPricePerSheet = 24;
-            else if(sheets <= 25) cutPricePerSheet = 20;
-            else if(sheets <= 50) cutPricePerSheet = 15;
-            else if(sheets <= 100) cutPricePerSheet = 10;
-            else cutPricePerSheet = 8;
-        }
+            const perRow1 = Math.floor(297 / w);
+            const perCol1 = Math.floor(420 / h);
+            const perSheet1 = perRow1 * perCol1;
 
-        cutTotal = cutPricePerSheet * sheets;
-        circulation = sheets;
+            const perRow2 = Math.floor(297 / h);
+            const perCol2 = Math.floor(420 / w);
+            const perSheet2 = perRow2 * perCol2;
+
+            const perSheet = Math.max(1, perSheet1, perSheet2);
+
+            sheets = Math.ceil(totalCirculation / perSheet);
+
+            if(perSheet <= 8) {
+                if(sheets <= 3) cutPricePerSheet = 12;
+                else if(sheets <= 10) cutPricePerSheet = 10;
+                else if(sheets <= 25) cutPricePerSheet = 8;
+                else if(sheets <= 50) cutPricePerSheet = 6;
+                else if(sheets <= 100) cutPricePerSheet = 4;
+                else cutPricePerSheet = 3;
+            } else {
+                if(sheets <= 3) cutPricePerSheet = 26;
+                else if(sheets <= 10) cutPricePerSheet = 24;
+                else if(sheets <= 25) cutPricePerSheet = 20;
+                else if(sheets <= 50) cutPricePerSheet = 15;
+                else if(sheets <= 100) cutPricePerSheet = 10;
+                else cutPricePerSheet = 8;
+            }
+
+            cutTotal = cutPricePerSheet * sheets;
+            circulation = sheets; 
+      }
     }
 
     switch (paper.val()) {
@@ -451,6 +471,7 @@ function validate() {
     if (w && h) {
         if (w < 40 || h < 40) err += "Мінімальний розмір: 40х40 мм.\n";
         if (w > 297 || h > 420) err += "Максимальний розмір: 297х420 мм.\n";
+        if(w === 420 && h === 297) return true;
     }
 
     if (err.length > 0) {
