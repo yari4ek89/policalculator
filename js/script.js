@@ -169,21 +169,74 @@ function calculate() {
     let cutTotal = 0;
     let cutPricePerSheet = 0;
     let sheets = totalCirculation;
-    if (format.val() === "own") {
-        const w = parseFloat(width.val());
-        const h = parseFloat(height.val());
+    if (format.val() === "own" || format.val() === "A5" || format.val() === "A6"
+       || format.val() === "viz" || format.val() === "euroviz" || format.val() === "fl1" || format.val() === "fl2") {
+      let w;
+      let h;
+      if(format.val() === "A5") {
+          w = 148;
+          h = 210;
+        } else if (format.val() === "A6") {
+          w = 105;
+          h = 148;
+        } else if (format.val() === "viz") {
+          w = 50;
+          h = 90;
+        } else if (format.val() === "euroviz") {
+          w = 55;
+          h = 85;
+        } else if (format.val() === "fl1") {
+          w = 100;
+          h = 200;
+        } else if (format.val() === "fl2") {
+          w = 100;
+          h = 100;
+        } else {
+          w = parseFloat(width.val());
+          h = parseFloat(height.val()); 
+        }
       
         if((w === 210 && h === 297) || (w === 297 && h === 210)) {
             format.val("A4");
         } else if((w === 297 && h === 420) || (w === 420 && h === 297)) {
           format.val("A3");
         } else {
-            const perRow1 = Math.floor(297 / w);
-            const perCol1 = Math.floor(420 / h);
+            if((w === 148 && h === 210) || (w === 210 && h === 148)) {
+              format.val("A5");
+            } else if((w === 105 && h === 148) || (w === 148 && h === 105)) {
+              format.val("A6");
+            } else if((w === 50 && h === 90) || (w === 90 && h === 50)) {
+              format.val("viz");
+            } else if((w === 55 && h === 85) || (w === 85 && h === 55)) {
+              format.val("euroviz");
+            } else if((w === 100 && h === 200) || (w === 200 && h === 100)) {
+              format.val("fl1");
+            } else if((w === 100 && h === 100) || (w === 100 && h === 100)) {
+              format.val("fl2");
+            }
+            let perRow1;
+            let perCol1;
+            let perRow2;
+            let perCol2;
+            if(paper.val() === "Офсетний" && densityCount === 80) {
+              if((w <= 210 && h <= 297) || (w <= 297 && h <= 210)) {
+                  perRow1 = Math.floor(210 / w);
+                  perCol1 = Math.floor(297 / h);  
+                  perRow2 = Math.floor(297 / w);
+                  perCol2 = Math.floor(210 / h);
+              } else if((w <= 297 && h <= 420) || (w <= 420 && h <= 297)) {
+                  perRow1 = Math.floor(297 / w);
+                  perCol1 = Math.floor(420 / h);  
+                  perRow2 = Math.floor(420 / w);
+                  perCol2 = Math.floor(297 / h);
+              }
+            } else {
+              perRow1 = Math.floor(310 / w);
+              perCol1 = Math.floor(430 / h);
+              perRow2 = Math.floor(430 / w);
+              perCol2 = Math.floor(310 / h);
+            }
             const perSheet1 = perRow1 * perCol1;
-
-            const perRow2 = Math.floor(420 / w);
-            const perCol2 = Math.floor(297 / h);
             const perSheet2 = perRow2 * perCol2;
           
             const q1 = Math.min(perCol1, perRow1);
