@@ -24,6 +24,33 @@ format.change(function () {
     width.val('');
     height.val('');
   }
+  if(format.val() === "viz" || format.val() === "euroviz" || format.val() === "fl1" || format.val() === "fl2") {
+    paper.val("Офсетний").change();
+    densityCount = 80;
+    designer_paper.css("display", "none");
+     $('#density').html(`
+                <option selected value=80>80</option>
+                <option value=160>160</option>
+                <option value=300>300</option>
+    `);
+    $('#paper').html(`
+                    <option value="Офсетний" selected>Офсетний</option>
+                    <option>Крейдований</option>
+    `);
+  } else {
+    paper.val("Офсетний").change();
+    densityCount = 80;
+    $('#density').html(`
+                <option selected value=80>80</option>
+                <option value=160>160</option>
+                <option value=300>300</option>
+    `);
+    $('#paper').html(`
+                    <option value="Офсетний" selected>Офсетний</option>
+                    <option>Крейдований</option>
+                    <option>Дизайнерський</option>
+    `);
+  }
 })
 
 resetButton.click(function () {
@@ -162,8 +189,11 @@ paper.click(function () {
 });
 
 function calculate() {
+    let w = parseFloat(width.val());
+    let h = parseFloat(height.val());
     densityCount = parseFloat($('#density').val());
     circulation = parseFloat($('#circulation').val());
+    if(format.val() === "A4" || ((w === 210 && h === 297) || (w === 297 && h === 210))) circulation = Math.ceil(circulation / 2);
     const totalCirculation = circulation * parseFloat(complects.val());
     circulation = totalCirculation;
     let cutTotal = 0;
@@ -171,8 +201,6 @@ function calculate() {
     let sheets = totalCirculation;
     if (format.val() === "own" || format.val() === "A5" || format.val() === "A6"
        || format.val() === "viz" || format.val() === "euroviz" || format.val() === "fl1" || format.val() === "fl2") {
-      let w;
-      let h;
       if(format.val() === "A5") {
           w = 148;
           h = 210;
@@ -233,7 +261,7 @@ function calculate() {
             } else {
               perRow1 = Math.floor(310 / w);
               perCol1 = Math.floor(430 / h);
-              perRow2 = Math.floor(430 / w);
+              perRow2 = Math.floor(439 / w);
               perCol2 = Math.floor(310 / h);
             }
             const perSheet1 = perRow1 * perCol1;
@@ -279,10 +307,10 @@ function calculate() {
                 if (format.val() === "A4" ||
                     format.val() === "A5" ||
                     format.val() === "A6" ||
-                    format.val() === "Вiзитка 50х90мм" ||
-                    format.val() === "Євро вiзитка 55х85мм" ||
-                    format.val() === "100x200мм" ||
-                    format.val() === "100x100мм" ||
+                    format.val() === "viz" ||
+                    format.val() === "euroviz" ||
+                    format.val() === "fl1" ||
+                    format.val() === "fl2" ||
                     (parseFloat(width.val()) <= 210 &&
                         parseFloat(height.val()) <= 297) &&
                     (parseFloat(width.val()) >= 40 &&
