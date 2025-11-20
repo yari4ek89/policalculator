@@ -60,21 +60,6 @@
                 </select>
                 <label class="form-label">Комплектів</label>
                 <input type="number" class="form-control mb-3" id="complects" placeholder="Наприклад, 1" value="1" min="1">
-                <div class="d-flex gap-5 mb-4">
-                    <button class="btn btn-calc" id="count-button">РОЗРАХУВАТИ</button>
-                    <button class="btn btn-reset" id="reset-button">СКИНУТИ</button>
-                </div>
-                <div class="mb-4">
-                    <div class="total-price">
-                        Загальна вартість: <span id="total" class="value">0</span> грн
-                    </div>
-                    <div class="unit-price">
-                        Ціна за одиницю: <span id="unit" class="value">0</span> грн
-                    </div>
-                    <div class="complect-price">
-                        Ціна за комплект: <span id="complect" class="value">0</span> грн
-                    </div>
-                </div>
             </div>
             <div class="col">
                 <label class="form-label">Свій розмір</label>
@@ -101,6 +86,23 @@
                 <label class="form-label">Тираж, листів</label>
                 <input type="number" class="form-control" id="circulation" placeholder="0" min="1">
             </div>
+          <div class="row">
+                <div class="d-flex gap-5 mb-4">
+                    <button class="btn btn-calc" id="count-button">РОЗРАХУВАТИ</button>
+                    <button class="btn btn-reset" id="reset-button">СКИНУТИ</button>
+                </div>
+                <div class="mb-4">
+                    <div class="total-price">
+                        Загальна вартість: <span id="total" class="value">0</span> грн
+                    </div>
+                    <div class="unit-price">
+                        Ціна за одиницю: <span id="unit" class="value">0</span> грн
+                    </div>
+                    <div class="complect-price">
+                        Ціна за комплект: <span id="complect" class="value">0</span> грн
+                    </div>
+                </div>
+          </div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
