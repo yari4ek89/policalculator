@@ -268,7 +268,7 @@ function calculate() {
             const perSheet2 = perRow2 * perCol2;
           
             const q1 = Math.min(perCol1, perRow1);
-            const q2 = Math.min(perCol2, perCol2);
+            const q2 = Math.min(perCol2, perRow2);
 
             let perSheet;
             if(q2 > q1) {
