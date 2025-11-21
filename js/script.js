@@ -193,7 +193,7 @@ function calculate() {
     let h = parseFloat(height.val());
     densityCount = parseFloat($('#density').val());
     circulation = parseFloat($('#circulation').val());
-    if(format.val() === "A4" || ((w === 210 && h === 297) || (w === 297 && h === 210))) circulation = Math.ceil(circulation / 2);
+    if(densityCount != 80 && format.val() === "A4" || ((w === 210 && h === 297) || (w === 297 && h === 210))) circulation = Math.ceil(circulation / 2);
     const totalCirculation = circulation * parseFloat(complects.val());
     circulation = totalCirculation;
     let cutTotal = 0;
