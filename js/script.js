@@ -552,6 +552,7 @@ function validate() {
     let komp = parseInt($('#complects').val());
     let w = parseInt($('#width').val());
     let h = parseInt($('#height').val());
+    let paperVal = paper.val();
     let err = "";
 
     if (tirazh < 1 || isNaN(tirazh)) err += "Тираж має бути ≥ 1.\n";
@@ -561,8 +562,9 @@ function validate() {
 
     if (w && h) {
         if (w < 40 || h < 40) err += "Мінімальний розмір: 40х40 мм.\n";
-        if (w > 297 || h > 420) err += "Максимальний розмір: 297х420 мм.\n";
-        if(w === 420 && h === 297) return true;
+        if ((w > 297 || h > 420) && paperVal === "Офсетний" && densityCount === 80) err += "Максимальний розмір (офсетний 80 гр): 297х420 мм.\n";
+        else if ((w > 310 || h > 430)  && densityCount != 80) err += "Максимальний розмір (iншi види): 310х430 мм.\n";
+        if((w === 420 && h === 297) || (w === 430 && h === 310)) return true;
     }
 
     if (err.length > 0) {
