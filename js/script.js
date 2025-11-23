@@ -261,7 +261,7 @@ function calculate() {
             } else {
               perRow1 = Math.floor(310 / w);
               perCol1 = Math.floor(430 / h);
-              perRow2 = Math.floor(439 / w);
+              perRow2 = Math.floor(430 / w);
               perCol2 = Math.floor(310 / h);
             }
             const perSheet1 = perRow1 * perCol1;
@@ -311,8 +311,9 @@ function calculate() {
                     format.val() === "euroviz" ||
                     format.val() === "fl1" ||
                     format.val() === "fl2" ||
-                    (parseFloat(width.val()) <= 210 &&
-                        parseFloat(height.val()) <= 297) &&
+                    ((parseFloat(width.val()) <= 310 &&
+                        parseFloat(height.val()) <= 430) || (parseFloat(width.val()) <= 430 &&
+                        parseFloat(height.val()) <= 310)) &&
                     (parseFloat(width.val()) >= 40 &&
                         parseFloat(height.val()) >= 40)) {
                     if (densityCount === 80) {
@@ -356,8 +357,9 @@ function calculate() {
                     }
                     A3Prices();
                 } else if (format.val() === "A3" ||
-                    (parseFloat(width.val()) <= 297 &&
-                        parseFloat(height.val()) <= 420) &&
+                    ((parseFloat(width.val()) <= 310 &&
+                        parseFloat(height.val()) <= 430) || (parseFloat(width.val()) <= 430 &&
+                        parseFloat(height.val()) <= 310)) &&
                     (parseFloat(width.val()) > 210 &&
                         parseFloat(height.val()) > 297)) {
                     if (densityCount === 80) {
@@ -557,14 +559,16 @@ function validate() {
 
     if (tirazh < 1 || isNaN(tirazh)) err += "Тираж має бути ≥ 1.\n";
     if (komp < 1 || isNaN(komp)) err += "Кількість комплектів ≥ 1.\n";
-
-    if ((w && !h) || (!w && h)) err += "Заповніть обидва поля розміру.\n";
+    if (isNaN(w) || isNaN(h)) err += "Заповніть поле (поля) розміру.\n";
 
     if (w && h) {
+        const isWithinLimits =
+            (w <= 310 && h <= 430) ||
+            (h <= 310 && w <= 430);
         if (w < 40 || h < 40) err += "Мінімальний розмір: 40х40 мм.\n";
         if ((w > 297 || h > 420) && paperVal === "Офсетний" && densityCount === 80) err += "Максимальний розмір (офсетний 80 гр): 297х420 мм.\n";
         else if ((w > 310 || h > 430)  && densityCount != 80) err += "Максимальний розмір (iншi види): 310х430 мм.\n";
-        if((w === 420 && h === 297) || (w === 430 && h === 310)) return true;
+        if((w === 420 && h === 297) || (w === 430 && h === 310) || isWithinLimits && densityCount > 80) return true;
     }
 
     if (err.length > 0) {
