@@ -311,9 +311,10 @@ function calculate() {
                     format.val() === "euroviz" ||
                     format.val() === "fl1" ||
                     format.val() === "fl2" ||
-                    ((parseFloat(width.val()) <= 310 &&
+                    (((parseFloat(width.val()) <= 310 &&
                         parseFloat(height.val()) <= 430) || (parseFloat(width.val()) <= 430 &&
-                        parseFloat(height.val()) <= 310)) &&
+                        parseFloat(height.val()) <= 310)) && (parseFloat(width.val()) <= 210 &&
+                        parseFloat(height.val()) <= 297)) &&
                     (parseFloat(width.val()) >= 40 &&
                         parseFloat(height.val()) >= 40)) {
                     if (densityCount === 80) {
@@ -565,8 +566,11 @@ function validate() {
         const isWithinLimits =
             (w <= 310 && h <= 430) ||
             (h <= 310 && w <= 430);
+        const isWithinLimits80 =
+            (w <= 297 && h <= 420) ||
+            (h <= 297 && w <= 420);
         if (w < 40 || h < 40) err += "Мінімальний розмір: 40х40 мм.\n";
-        if ((w > 297 || h > 420) && paperVal === "Офсетний" && densityCount === 80) err += "Максимальний розмір (офсетний 80 гр): 297х420 мм.\n";
+        if (!isWithinLimits80 && paperVal === "Офсетний" && densityCount === 80) err += "Максимальний розмір (офсетний 80 гр): 297х420 мм.\n";
         else if ((w > 310 || h > 430)  && densityCount != 80) err += "Максимальний розмір (iншi види): 310х430 мм.\n";
         if((w === 420 && h === 297) || (w === 430 && h === 310) || isWithinLimits && densityCount > 80) return true;
     }
