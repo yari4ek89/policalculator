@@ -559,7 +559,7 @@ function validate() {
 
     if (tirazh < 1 || isNaN(tirazh)) err += "Тираж має бути ≥ 1.\n";
     if (komp < 1 || isNaN(komp)) err += "Кількість комплектів ≥ 1.\n";
-    if (isNaN(w) || isNaN(h)) err += "Заповніть поле (поля) розміру.\n";
+    if ((isNaN(w) || isNaN(h)) && format.val() === "own") err += "Заповніть поле (поля) розміру.\n";
 
     if (w && h) {
         const isWithinLimits =
