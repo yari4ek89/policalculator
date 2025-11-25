@@ -314,7 +314,8 @@ function calculate() {
                     (((parseFloat(width.val()) <= 310 &&
                         parseFloat(height.val()) <= 430) || (parseFloat(width.val()) <= 430 &&
                         parseFloat(height.val()) <= 310)) && (parseFloat(width.val()) <= 210 &&
-                        parseFloat(height.val()) <= 297)) &&
+                        parseFloat(height.val()) <= 297) || (parseFloat(width.val()) <= 297 &&
+                        parseFloat(height.val()) <= 210)) &&
                     (parseFloat(width.val()) >= 40 &&
                         parseFloat(height.val()) >= 40)) {
                     if (densityCount === 80) {
@@ -360,9 +361,7 @@ function calculate() {
                 } else if (format.val() === "A3" ||
                     ((parseFloat(width.val()) <= 310 &&
                         parseFloat(height.val()) <= 430) || (parseFloat(width.val()) <= 430 &&
-                        parseFloat(height.val()) <= 310)) &&
-                    (parseFloat(width.val()) > 210 &&
-                        parseFloat(height.val()) > 297)) {
+                        parseFloat(height.val()) <= 310))) {
                     if (densityCount === 80) {
                         if (printType.val() === "Односторонній друк") {
                             if (circulation >= 1 && circulation <= 4) {
@@ -511,6 +510,7 @@ function A3Prices() {
         } else anotherPrint(48, 40.32, 35.52, 30.72, 26.88, 23.04, 19.2, 15.36);
     } else if (densityCount === 300) {
         if (printType.val() === "Односторонній друк") {
+            console.log("A3");
             if (circulation >= 1 && circulation <= 4) pricePerSheet = 70;
             else if (circulation >= 5 && circulation <= 14) pricePerSheet = 58.8;
             else if (circulation >= 15 && circulation <= 24) pricePerSheet = 51.8;
