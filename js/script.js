@@ -27,6 +27,7 @@ format.change(function () {
   if(format.val() === "viz" || format.val() === "euroviz" || format.val() === "fl1" || format.val() === "fl2") {
     paper.val("Офсетний").change();
     densityCount = 80;
+    $('#designer-paper').val('Dali candido');
     designer_paper.css("display", "none");
      $('#density').html(`
                 <option selected value=80>80</option>
@@ -40,6 +41,8 @@ format.change(function () {
   } else {
     paper.val("Офсетний").change();
     densityCount = 80;
+    designer_paper.css("display", "none");
+    $('#designer-paper').val('Dali candido');
     $('#density').html(`
                 <option selected value=80>80</option>
                 <option value=160>160</option>
@@ -63,6 +66,7 @@ resetButton.click(function () {
     height.val('');
     paper.val("Офсетний").change();
     designer_paper.css("display", "none");
+    $('#designer-paper').val('Dali candido');
     $('#density').html(`
                 <option selected value=80>80</option>
                 <option value=160>160</option>
@@ -193,14 +197,14 @@ function calculate() {
     let h = parseFloat(height.val());
     densityCount = parseFloat($('#density').val());
     circulation = parseFloat($('#circulation').val());
-    if((densityCount > 80 && format.val() === "A4" || ((w === 210 && h === 297) || (w === 297 && h === 210)) && densityCount > 80)) circulation = Math.ceil(circulation / 2);
+    if((densityCount > 80 && format.val() === "A4" || ((w === 210 && h === 297) || (w === 297 && h === 210)) && densityCount > 80 && paper.val() !== "Дизайнерський")) circulation = Math.ceil(circulation / 2);
     const totalCirculation = circulation * parseFloat(complects.val());
     circulation = totalCirculation;
     let cutTotal = 0;
     let cutPricePerSheet = 0;
     let sheets = totalCirculation;
-    if (format.val() === "own" || format.val() === "A5" || format.val() === "A6"
-       || format.val() === "viz" || format.val() === "euroviz" || format.val() === "fl1" || format.val() === "fl2") {
+    if ((format.val() === "own" || format.val() === "A5" || format.val() === "A6"
+       || format.val() === "viz" || format.val() === "euroviz" || format.val() === "fl1" || format.val() === "fl2") && paper.val() !== "Дизайнерський") {
       if(format.val() === "A5") {
           w = 148;
           h = 210;
@@ -473,7 +477,7 @@ function calculate() {
                     case "Toile moyenne":
                         designerPaper(100, 90.9, 86.36, 81.82, 77.27)
                         break;
-                    case "SplendorGel avorio":
+                    case "Icelite 2s Toile moyenne":
                         designerPaper(100, 90.9, 86.36, 81.82, 77.27)
                         break;
                     case "Sirio white white":
