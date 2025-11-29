@@ -12,6 +12,7 @@ let printType = $('#printType');
 let complects = $('#complects');
 let pricePerSheet = 0;
 let totalPrice = 0;
+let totalCirculation = 0;
 
 countButton.click(function () {
     if(!validate()) return;
@@ -197,14 +198,14 @@ function calculate() {
     let h = parseFloat(height.val());
     densityCount = parseFloat($('#density').val());
     circulation = parseFloat($('#circulation').val());
-    if((densityCount > 80 && format.val() === "A4" || ((w === 210 && h === 297) || (w === 297 && h === 210)) && densityCount > 80 && paper.val() !== "Дизайнерський")) circulation = Math.ceil(circulation / 2);
-    const totalCirculation = circulation * parseFloat(complects.val());
+    if((densityCount > 80 && format.val() === "A4" || ((w === 210 && h === 297) || (w === 297 && h === 210)) && densityCount > 80)) circulation = Math.ceil(circulation / 2);
+    totalCirculation = circulation * parseFloat(complects.val());
     circulation = totalCirculation;
     let cutTotal = 0;
     let cutPricePerSheet = 0;
     let sheets = totalCirculation;
     if ((format.val() === "own" || format.val() === "A5" || format.val() === "A6"
-       || format.val() === "viz" || format.val() === "euroviz" || format.val() === "fl1" || format.val() === "fl2") && paper.val() !== "Дизайнерський") {
+       || format.val() === "viz" || format.val() === "euroviz" || format.val() === "fl1" || format.val() === "fl2")) {
       if(format.val() === "A5") {
           w = 148;
           h = 210;
@@ -489,6 +490,8 @@ function calculate() {
                 }
                 break;
         }
+    console.log(sheets);
+    console.log(pricePerSheet);
     const printTotal = pricePerSheet * sheets;
     totalPrice = printTotal + cutTotal;
     const unitPrice = totalPrice / totalCirculation;
