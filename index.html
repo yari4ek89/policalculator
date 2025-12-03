@@ -1,111 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Calculator form</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <!--<link rel="stylesheet" href="css/style.css">-->
+  <title>Calculator form</title>
+  <link rel="stylesheet" href="https://printstudio.top/catalog/view/theme/so-ladaz/css/main.css">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div class="container">
-        <div class="row">
-            <p class="fw-bold text-center">КАЛЬКУЛЯТОР РОЗРАХУНКУ ВАРТОСТІ ДРУКУ</p>
+  <div class="container">
+
+    <button type="button" id="calc-open" class="btn btn-blue btn-calc"><i class="fa fa-calculator"
+        aria-hidden="true"></i></button>
+    <div class="calc mt-0 mb-2">
+      <button type="button" id="calc-close" class="calc-close">×</button>
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="title-category">Калькулятор розрахунку вартості друку</h3>
         </div>
-        <div class="row mb-3">
-            <div class="title-line"></div>
+      </div>
+      <div class="d-grid calc_grid">
+
+        <div class="form-group">
+          <label class="form-label">Формат</label>
+          <select class="form-select form-control" id="format-select">
+            <option disabled>Листiвка, плакат:</option>
+            <option value="A6">A6 (105х148 мм)</option>
+            <option value="A5">A5 (148х210 мм)</option>
+            <option value="A4" selected>A4 (210x297 мм)</option>
+            <option value="A3">A3 (297x420 мм)</option>
+            <option disabled>Вiзитки:</option>
+            <option value="viz">Вiзитка 50х90мм</option>
+            <option value="euroviz">Євро вiзитка 55х85мм</option>
+            <option disabled>Флаєр:</option>
+            <option value="fl1">100x200мм</option>
+            <option value="fl2">100x100мм</option>
+            <option value="own">Свій</option>
+          </select>
         </div>
-        <div class="row mb-3">
-            <div class="col">
-                <label class="form-label">Формат</label>
-                <select class="form-select mb-3" id="format-select">
-		            <option disabled>Листiвка, плакат:</option>
-                    <option value="A6">A6 (105х148 мм)</option>
-                    <option value="A5">A5 (148х210 мм)</option>
-                    <option value="A4" selected>A4 (210x297 мм)</option>
-                    <option value="A3">A3 (297x420 мм)</option>
-                    <option disabled>Вiзитки:</option>
-                    <option value="viz">Вiзитка 50х90мм</option>
-                    <option value="euroviz">Євро вiзитка 55х85мм</option>
-                    <option disabled>Флаєр:</option>
-                    <option value="fl1">100x200мм</option>
-                    <option value="fl2">100x100мм</option>
-                    <option value="own">Свій</option>
-                </select>
-                <label class="form-label">Вибір паперу</label>
-                <select class="form-select mb-3" id="paper">
-                    <option value="Офсетний" selected>Офсетний</option>
-                    <option>Крейдований</option>
-                    <option>Дизайнерський</option>
-                </select>
-		        <select class="form-select mb-3" id="designer-paper">
-                    <option selected value="Dali candido">Dali candido</option>
-                    <option value="Dali neve">Dali neve</option>
-                    <option value="GSK Калька EW">GSK Калька EW</option>
-                    <option value="Stardream crystal">Stardream crystal</option>
-                    <option value="Stardream diamond">Stardream diamond</option>
-                    <option value="Stardream opal">Stardream opal</option>
-                    <option value="Stardream citrine">Stardream citrine</option>
-                    <option value="Flora avorio">Flora avorio</option>
-                    <option value="Tintoretto gesso">Tintoretto gesso</option>
-                    <option value="Sirio pearl aurum">Sirio pearl aurum</option>
-                    <option value="Icelite 2s Toile moyenne">Icelite 2s Toile moyenne</option>
-                    <option value="SplendorGel avorio">SplendorGel avorio</option>
-                    <option value="Sirio white white">Sirio white white</option>
-                </select>
-                <label class="form-label">Друк 4+0 або Друк 4+4</label>
-                <select class="form-select mb-3" id="printType">
-                    <option value="Односторонній друк" selected>Односторонній друк</option>
-		                <option>Двостороннiй друк</option>
-                </select>
-                <label class="form-label">Комплектів</label>
-                <input type="number" class="form-control mb-3" id="complects" placeholder="Наприклад, 1" value="1" min="1">
-            </div>
-            <div class="col">
-                <label class="form-label">Свій розмір</label>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="input-group mb-3">
-                            <input type="number" class="form-control" id="width" min="40" max="297">
-                            <span class="input-group-text">MM</span>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="input-group mb-3">
-                            <input type="number" class="form-control" id="height" min="40" max="420">
-                            <span class="input-group-text">MM</span>
-                        </div>
-                    </div>
-                </div>
-                <label class="form-label">Щільність паперу, грам</label>
-                <select class="form-select mb-3" id="density">
-                    <option value=80>80</option>
-                    <option value=160>160</option>
-                    <option value=300>300</option>
-                </select>
-                <label class="form-label">Тираж, листів</label>
-                <input type="number" class="form-control" id="circulation" placeholder="0" min="1">
-            </div>
+        <div class="form-group">
+          <label class="form-label">Свій розмір</label>
           <div class="row">
-                <div class="d-flex gap-5 mb-4">
-                    <button class="btn btn-calc" id="count-button">РОЗРАХУВАТИ</button>
-                    <button class="btn btn-reset" id="reset-button">СКИНУТИ</button>
+            <div class="col-md-6 col-sm-6 col-xs-6 col-6">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="number" class="form-control" id="width" min="40" max="297">
+                  <span class="input-group-text">MM</span>
                 </div>
-                <div class="mb-4">
-                    <div class="total-price">
-                        Загальна вартість: <span id="total" class="value">0</span> грн
-                    </div>
-                    <div class="unit-price">
-                        Ціна за одиницю: <span id="unit" class="value">0</span> грн
-                    </div>
-                    <div class="complect-price">
-                        Ціна за комплект: <span id="complect" class="value">0</span> грн
-                    </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6 col-6">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="number" class="form-control" id="height" min="40" max="420">
+                  <span class="input-group-text">MM</span>
                 </div>
+              </div>
+            </div>
           </div>
         </div>
+        <div class="form-group">
+          <label class="form-label">Вибір паперу</label>
+          <select class="form-select form-control" id="paper">
+            <option value="Офсетний" selected>Офсетний</option>
+            <option>Крейдований</option>
+            <option>Дизайнерський</option>
+          </select>
+
+          <select class="form-select form-control mt-2" id="designer-paper">
+            <option selected value="Dali candido">Dali candido</option>
+            <option value="Dali neve">Dali neve</option>
+            <option value="GSK Калька EW">GSK Калька EW</option>
+            <option value="Stardream crystal">Stardream crystal</option>
+            <option value="Stardream diamond">Stardream diamond</option>
+            <option value="Stardream opal">Stardream opal</option>
+            <option value="Stardream citrine">Stardream citrine</option>
+            <option value="Flora avorio">Flora avorio</option>
+            <option value="Tintoretto gesso">Tintoretto gesso</option>
+            <option value="Sirio pearl aurum">Sirio pearl aurum</option>
+            <option value="Icelite 2s Toile moyenne">Icelite 2s Toile moyenne</option>
+            <option value="SplendorGel avorio">SplendorGel avorio</option>
+            <option value="Sirio white white">Sirio white white</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Щільність паперу, грам</label>
+          <select class="form-select form-control" id="density">
+            <option value=80>80</option>
+            <option value=160>160</option>
+            <option value=300>300</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Друк 4+0 або Друк 4+4</label>
+          <select class="form-select form-control" id="printType">
+            <option value="Односторонній друк" selected>Односторонній друк</option>
+            <option>Двостороннiй друк</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Тираж, листів</label>
+          <input type="number" class="form-control" id="circulation" placeholder="0" min="1">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Комплектів</label>
+          <input type="number" class="form-control" id="complects" placeholder="Наприклад, 1" value="1" min="1">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12 col-12">
+          <div class="d-flex gap-5 mb-2 mt-2">
+            <button class="btn btn-blue btn-calc" id="count-button">Розрахувати</button>
+            <button class="btn btn-danger btn-reset" id="reset-button">Скинути</button>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12 col-12">
+          <div class="mb-2 mt-1">
+            <div class="total-price">
+              Загальна вартість: <span id="total" class="value">0</span> грн
+            </div>
+            <div class="unit-price">
+              Ціна за одиницю: <span id="unit" class="value">0</span> грн
+            </div>
+            <div class="complect-price">
+              Ціна за комплект: <span id="complect" class="value">0</span> грн
+            </div>
+            <div class="general-count">
+                Загальна кількість аркушів: <span id="sheets" class="value">0</span> аркушів
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="js/script.js"></script>
+
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="js/script.js"></script>
 </body>
+
 </html>

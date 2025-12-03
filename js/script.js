@@ -10,6 +10,7 @@ let height = $('#height');
 let circulation = 0;
 let printType = $('#printType');
 let complects = $('#complects');
+let rawSheets = $('#sheets');
 let pricePerSheet = 0;
 let totalPrice = 0;
 let totalCirculation = 0;
@@ -58,6 +59,7 @@ format.change(function () {
 })
 
 resetButton.click(function () {
+    rawSheets.text(0);
     pricePerSheet = 0;
     totalPrice = 0;
     densityCount = 80;
@@ -491,7 +493,7 @@ function calculate() {
                 break;
         }
     console.log(sheets);
-    console.log(pricePerSheet);
+    rawSheets.text(sheets);
     const printTotal = pricePerSheet * sheets;
     totalPrice = printTotal + cutTotal;
     const unitPrice = totalPrice / totalCirculation;
@@ -589,3 +591,39 @@ function validate() {
 
     return true;
 }
+
+
+$(document).ready(function () {
+
+  // Управление мобильной версией
+  function toggleMobileCalc(show) {
+    if ($(window).width() <= 480) {
+      $(".calc").css("left", show ? "0" : "-100%");
+      $("#calc-open").css("right", show ? "-100%" : "0");
+    }
+  }
+	
+	// События
+  $("#calc-open").click(() => toggleMobileCalc(true));
+  $("#calc-close").click(() => toggleMobileCalc(false));
+
+  // Закрытие калькулятора при клике вне его
+  $(document).click(function (event) {
+    if (!$(event.target).closest("#count-button").length) {
+      $('.wrap_error, .wrap_error_q').html('');
+    }
+    
+    if ($(window).width() <= 480 && 
+        !$(event.target).closest(".calc, #calc-open").length) {
+      toggleMobileCalc(false);
+    }
+  });
+
+  // Расчет по Enter
+  $(document).keypress(function (e) {
+    if (e.keyCode === 13) {
+      $("#count-button").click();
+    }
+  });
+
+});
