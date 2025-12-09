@@ -1,9 +1,9 @@
 let countButton = $('#count-button');
 let resetButton = $('#reset-button');
-let paper = $('#paper');
+//let paper = $('#paper');
 let density = $('#density');
 let densityCount = 80;
-let designer_paper = $('#designer-paper');
+let designer_paper = $('#designer-paperr');
 let format = $('#format-select');
 let width = $('#width');
 let height = $('#height');
@@ -11,6 +11,7 @@ let circulation = 0;
 let printType = $('#printType');
 let complects = $('#complects');
 let rawSheets = $('#sheets');
+let previewImg = $('.preview-img');
 let pricePerSheet = 0;
 let totalPrice = 0;
 let totalCirculation = 0;
@@ -21,59 +22,41 @@ countButton.click(function () {
 });
 
 format.change(function () {
-  if(format.val() === "own") return;
-  else {
-    width.val('');
-    height.val('');
-  }
-  if(format.val() === "viz" || format.val() === "euroviz" || format.val() === "fl1" || format.val() === "fl2") {
-    paper.val("Офсетний").change();
-    densityCount = 80;
-    $('#designer-paper').val('Dali candido');
-    designer_paper.css("display", "none");
-     $('#density').html(`
-                <option selected value=80>80</option>
-                <option value=160>160</option>
-                <option value=300>300</option>
-    `);
-    $('#paper').html(`
-                    <option value="Офсетний" selected>Офсетний</option>
-                    <option>Крейдований</option>
-    `);
-  } else {
-    paper.val("Офсетний").change();
-    densityCount = 80;
-    designer_paper.css("display", "none");
-    $('#designer-paper').val('Dali candido');
+    if(format.val() === "own") return;
+    else {
+        width.val('');
+        height.val('');
+    }
+    //paper.val("Офсетний").change();
+    densityCount = 285;
+    //designer_paper.css("display", "none");
+    previewImg.attr("src", "img/dalicandido.png");
+    $('#designer-paperr').val('Dali candido');
     $('#density').html(`
-                <option selected value=80>80</option>
-                <option value=160>160</option>
-                <option value=300>300</option>
-    `);
-    $('#paper').html(`
+  	<option selected value=285>285</option>
+  `);
+    /*$('#paper').html(`
                     <option value="Офсетний" selected>Офсетний</option>
                     <option>Крейдований</option>
                     <option>Дизайнерський</option>
-    `);
-  }
+    `);*/
 })
 
 resetButton.click(function () {
     rawSheets.text(0);
     pricePerSheet = 0;
     totalPrice = 0;
-    densityCount = 80;
+    densityCount = 285;
     circulation = 0;
     format.val("A4").change();
     width.val('');
     height.val('');
-    paper.val("Офсетний").change();
-    designer_paper.css("display", "none");
-    $('#designer-paper').val('Dali candido');
+    //paper.val("Офсетний").change();
+    //designer_paper.css("display", "none");
+    previewImg.attr("src", "img/dalicandido.png");
+    $('#designer-paperr').val('Dali candido');
     $('#density').html(`
-                <option selected value=80>80</option>
-                <option value=160>160</option>
-                <option value=300>300</option>
+                <option selected value=285>285</option>
     `);
     $("#circulation").val('');
     printType.val("Односторонній друк").change();
@@ -99,7 +82,7 @@ density.click(function () {
     densityCount = parseFloat($('#density').val());
 })
 
-paper.click(function () {
+/*paper.click(function () {
     switch (paper.val()) {
         case "Офсетний":
             designer_paper.css("display", "none");
@@ -193,7 +176,90 @@ paper.click(function () {
             })
             break;
     }
-});
+});*/
+
+designer_paper.change(function () {
+    switch (designer_paper.val()) {
+        case "Dali candido":
+            density.html(`
+                        <option selected value=285 disabled>285</option>
+                    `);
+            previewImg.attr("src", "img/dalicandido.png");
+            break;
+        case "Dali neve":
+            density.html(`
+                        <option selected disabled>285</option>
+                    `);
+            previewImg.attr("src", "img/dalineve.png");
+            break;
+        case "GSK Калька EW":
+            density.html(`
+                        <option selected disabled>200</option>
+                    `);
+            previewImg.attr("src", "img/GSKEW.png");
+            break;
+        case "Stardream crystal":
+            density.html(`
+                        <option selected disabled>285</option>
+                    `);
+            previewImg.attr("src", "img/Stardreamcrystal.png");
+            break;
+        case "Stardream diamond":
+            density.html(`
+                        <option selected disabled>285</option>
+                    `);
+            previewImg.attr("src", "img/Stardreamdiamond.png");
+            break;
+        case "Stardream opal":
+            density.html(`
+                        <option selected disabled>285</option>
+                    `);
+            previewImg.attr("src", "img/Stardreamopal.png");
+            break;
+        case "Stardream citrine":
+            density.html(`
+                        <option selected disabled>285</option>
+                    `);
+            previewImg.attr("src", "img/Stardreamcitrine.png");
+            break;
+        case "Flora avorio":
+            density.html(`
+                        <option selected disabled>350</option>
+                    `);
+            previewImg.attr("src", "img/floraavorio.png");
+            break;
+        case "Tintoretto gesso":
+            density.html(`
+                        <option selected disabled>300</option>
+                    `);
+            previewImg.attr("src", "img/Tintorettogesso.png");
+            break;
+        case "Sirio pearl aurum":
+            density.html(`
+                        <option selected disabled>300</option>
+                    `);
+            previewImg.attr("src", "img/Siriopearlaurum.png");
+            break;
+        case "Icelite 2s Toile moyenne":
+            density.html(`
+                        <option selected disabled>335</option>
+                    `);
+            previewImg.attr("src", "img/Icelite2sToilemoyenne.png");
+            break;
+        case "SplendorGel avorio":
+            density.html(`
+                        <option selected disabled>300</option>
+                    `);
+            previewImg.attr("src", "img/SplendorGelavorio.png");
+            break;
+        case "Sirio white white":
+            density.html(`
+                        <option selected disabled>350</option>
+                    `);
+            previewImg.attr("src", "img/Siriowhitewhite.png");
+            break;
+    }
+})
 
 function calculate() {
     let w = parseFloat(width.val());
@@ -207,83 +273,83 @@ function calculate() {
     let cutPricePerSheet = 0;
     let sheets = totalCirculation;
     if ((format.val() === "own" || format.val() === "A5" || format.val() === "A6"
-       || format.val() === "viz" || format.val() === "euroviz" || format.val() === "fl1" || format.val() === "fl2")) {
-      if(format.val() === "A5") {
-          w = 148;
-          h = 210;
+        || format.val() === "viz" || format.val() === "euroviz" || format.val() === "fl1" || format.val() === "fl2")) {
+        if(format.val() === "A5") {
+            w = 148;
+            h = 210;
         } else if (format.val() === "A6") {
-          w = 105;
-          h = 148;
+            w = 105;
+            h = 148;
         } else if (format.val() === "viz") {
-          w = 50;
-          h = 90;
+            w = 50;
+            h = 90;
         } else if (format.val() === "euroviz") {
-          w = 55;
-          h = 85;
+            w = 55;
+            h = 85;
         } else if (format.val() === "fl1") {
-          w = 100;
-          h = 200;
+            w = 100;
+            h = 200;
         } else if (format.val() === "fl2") {
-          w = 100;
-          h = 100;
+            w = 100;
+            h = 100;
         } else {
-          w = parseFloat(width.val());
-          h = parseFloat(height.val()); 
+            w = parseFloat(width.val());
+            h = parseFloat(height.val());
         }
-      
+
         if((w === 210 && h === 297) || (w === 297 && h === 210)) {
             format.val("A4");
         } else if((w === 297 && h === 420) || (w === 420 && h === 297)) {
-          format.val("A3");
+            format.val("A3");
         } else {
             if((w === 148 && h === 210) || (w === 210 && h === 148)) {
-              format.val("A5");
+                format.val("A5");
             } else if((w === 105 && h === 148) || (w === 148 && h === 105)) {
-              format.val("A6");
+                format.val("A6");
             } else if((w === 50 && h === 90) || (w === 90 && h === 50)) {
-              format.val("viz");
+                format.val("viz");
             } else if((w === 55 && h === 85) || (w === 85 && h === 55)) {
-              format.val("euroviz");
+                format.val("euroviz");
             } else if((w === 100 && h === 200) || (w === 200 && h === 100)) {
-              format.val("fl1");
+                format.val("fl1");
             } else if((w === 100 && h === 100) || (w === 100 && h === 100)) {
-              format.val("fl2");
+                format.val("fl2");
             }
             let perRow1;
             let perCol1;
             let perRow2;
             let perCol2;
-            if(paper.val() === "Офсетний" && densityCount === 80) {
-              if((w <= 210 && h <= 297) || (w <= 297 && h <= 210)) {
-                  perRow1 = Math.floor(210 / w);
-                  perCol1 = Math.floor(297 / h);  
-                  perRow2 = Math.floor(297 / w);
-                  perCol2 = Math.floor(210 / h);
-              } else if((w <= 297 && h <= 420) || (w <= 420 && h <= 297)) {
-                  perRow1 = Math.floor(297 / w);
-                  perCol1 = Math.floor(420 / h);  
-                  perRow2 = Math.floor(420 / w);
-                  perCol2 = Math.floor(297 / h);
-              }
+            if(densityCount === 80) {
+                if((w <= 210 && h <= 297) || (w <= 297 && h <= 210)) {
+                    perRow1 = Math.floor(210 / w);
+                    perCol1 = Math.floor(297 / h);
+                    perRow2 = Math.floor(297 / w);
+                    perCol2 = Math.floor(210 / h);
+                } else if((w <= 297 && h <= 420) || (w <= 420 && h <= 297)) {
+                    perRow1 = Math.floor(297 / w);
+                    perCol1 = Math.floor(420 / h);
+                    perRow2 = Math.floor(420 / w);
+                    perCol2 = Math.floor(297 / h);
+                }
             } else {
-              perRow1 = Math.floor(310 / w);
-              perCol1 = Math.floor(430 / h);
-              perRow2 = Math.floor(430 / w);
-              perCol2 = Math.floor(310 / h);
+                perRow1 = Math.floor(310 / w);
+                perCol1 = Math.floor(430 / h);
+                perRow2 = Math.floor(430 / w);
+                perCol2 = Math.floor(310 / h);
             }
             const perSheet1 = perRow1 * perCol1;
             const perSheet2 = perRow2 * perCol2;
-          
+
             const q1 = Math.min(perCol1, perRow1);
             const q2 = Math.min(perCol2, perRow2);
 
             let perSheet;
             if(q2 > q1) {
-              perSheet = perSheet2;
+                perSheet = perSheet2;
             } else if (q1 > q2) {
-              perSheet = perSheet1;
+                perSheet = perSheet1;
             } else {
-              perSheet = Math.max(perSheet1, perSheet2);
+                perSheet = Math.max(perSheet1, perSheet2);
             }
 
             sheets = Math.ceil(totalCirculation / perSheet);
@@ -305,11 +371,11 @@ function calculate() {
             }
 
             cutTotal = cutPricePerSheet * sheets;
-            circulation = sheets; 
-      }
+            circulation = sheets;
+        }
     }
 
-    switch (paper.val()) {
+    /*switch (paper.val()) {
             case "Офсетний":
                 if (format.val() === "A4" ||
                     format.val() === "A5" ||
@@ -491,10 +557,50 @@ function calculate() {
                         break;
                 }
                 break;
-        }
-    console.log(sheets);
-    rawSheets.text(sheets);
+        }*/
+    switch (designer_paper.val()) {
+        case "Dali candido":
+            designerPaper(110, 100, 95, 90, 85)
+            break;
+        case "Dali neve":
+            designerPaper(110, 100, 95, 90, 85)
+            break;
+        case "Stardream crystal":
+            designerPaper(120, 109.1, 103.64, 98.18, 92.73)
+            break;
+        case "Stardream diamond":
+            designerPaper(120, 109.1, 103.64, 98.18, 92.73)
+            break;
+        case "Stardream opal":
+            designerPaper(120, 109.1, 103.64, 98.18, 92.73)
+            break;
+        case "Stardream citrine":
+            designerPaper(140, 127.3, 120.8, 114.55, 108.18)
+            break;
+        case "Flora avorio":
+            designerPaper(100, 90.9, 86.36, 81.82, 77.27)
+            break;
+        case "Tintoretto gesso":
+            designerPaper(100, 90.9, 86.36, 81.82, 77.27)
+            break;
+        case "Sirio pearl aurum":
+            designerPaper(160, 145.45, 138.18, 130.91, 123.64)
+            break;
+        case "Toile moyenne":
+            designerPaper(100, 90.9, 86.36, 81.82, 77.27)
+            break;
+        case "Icelite 2s Toile moyenne":
+            designerPaper(100, 90.9, 86.36, 81.82, 77.27)
+            break;
+        case "Sirio white white":
+            designerPaper(110, 100, 95, 90, 85)
+            break;
+        case "GSK Калька EW":
+            designerPaper(120, 109.1, 103.64, 98.18, 92.73)
+            break;
+    }
     const printTotal = pricePerSheet * sheets;
+    rawSheets.text(sheets);
     totalPrice = printTotal + cutTotal;
     const unitPrice = totalPrice / totalCirculation;
     $('.total-price .value').text(totalPrice.toFixed(2));
@@ -564,7 +670,7 @@ function validate() {
     let komp = parseInt($('#complects').val());
     let w = parseInt($('#width').val());
     let h = parseInt($('#height').val());
-    let paperVal = paper.val();
+    //let paperVal = paper.val();
     let err = "";
 
     if (tirazh < 1 || isNaN(tirazh)) err += "Тираж має бути ≥ 1.\n";
@@ -595,35 +701,35 @@ function validate() {
 
 $(document).ready(function () {
 
-  // Управление мобильной версией
-  function toggleMobileCalc(show) {
-    if ($(window).width() <= 480) {
-      $(".calc").css("left", show ? "0" : "-100%");
-      $("#calc-open").css("right", show ? "-100%" : "0");
+    // Управление мобильной версией
+    function toggleMobileCalc(show) {
+        if ($(window).width() <= 480) {
+            $(".calc").css("left", show ? "0" : "-100%");
+            $("#calc-open").css("right", show ? "-100%" : "0");
+        }
     }
-  }
-	
-	// События
-  $("#calc-open").click(() => toggleMobileCalc(true));
-  $("#calc-close").click(() => toggleMobileCalc(false));
 
-  // Закрытие калькулятора при клике вне его
-  $(document).click(function (event) {
-    if (!$(event.target).closest("#count-button").length) {
-      $('.wrap_error, .wrap_error_q').html('');
-    }
-    
-    if ($(window).width() <= 480 && 
-        !$(event.target).closest(".calc, #calc-open").length) {
-      toggleMobileCalc(false);
-    }
-  });
+    // События
+    $("#calc-open").click(() => toggleMobileCalc(true));
+    $("#calc-close").click(() => toggleMobileCalc(false));
 
-  // Расчет по Enter
-  $(document).keypress(function (e) {
-    if (e.keyCode === 13) {
-      $("#count-button").click();
-    }
-  });
+    // Закрытие калькулятора при клике вне его
+    $(document).click(function (event) {
+        if (!$(event.target).closest("#count-button").length) {
+            $('.wrap_error, .wrap_error_q').html('');
+        }
+
+        if ($(window).width() <= 480 &&
+            !$(event.target).closest(".calc, #calc-open").length) {
+            toggleMobileCalc(false);
+        }
+    });
+
+    // Расчет по Enter
+    $(document).keypress(function (e) {
+        if (e.keyCode === 13) {
+            $("#count-button").click();
+        }
+    });
 
 });
